@@ -36,7 +36,7 @@ router.put('/:id', async (req, res) => {
     const { name, troop_combo, tips, image_url, mode  } = req.body;
 
     const result = await pool.query(
-      'UPDATE strategies SET name=$1, troop_combo=$2, tips=$3, image_url=$4, mode=$5,  WHERE id=$6 RETURNING *',
+      'UPDATE strategies SET name=$1, troop_combo=$2, tips=$3, image_url=$4, mode=$5 WHERE id=$6 RETURNING *',
       [name, troop_combo, tips, image_url, mode,  id]
     );
 
