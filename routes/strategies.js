@@ -18,11 +18,11 @@ router.get('/', async (req, res) => {
 });
 
 router.post('/', async (req, res) => {
-  const { name, troop_combo, tips, mode } = req.body;
+  const { name, troop_combo, tips,image_url, mode } = req.body;
   try {
     const result = await pool.query(
-      'INSERT INTO strategies (name, troop_combo, tips, mode, image_url) VALUES ($1, $2, $3, $4, $5) RETURNING *',
-      [name, troop_combo, tips, mode, image_url]
+      'INSERT INTO strategies (name, troop_combo, tips, image_url , mode ) VALUES ($1, $2, $3, $4, $5) RETURNING *',
+      [name, troop_combo, tips, image_url, mode]
     );
     res.json(result.rows[0]);
   } catch (err) {
@@ -31,11 +31,11 @@ router.post('/', async (req, res) => {
 });
 
 router.put('/:id', async (req, res) => {
-  const { name, troop_combo, tips, mode , image_url } = req.body;
+  const { name, troop_combo, tips, image_url, mode  } = req.body;
   try {
     await pool.query(
-      'UPDATE strategies SET name = $1, troop_combo = $2, tips = $3, mode = $4 WHERE id = $5, image_url = $6',
-      [name, troop_combo, tips, mode, image_url, req.params.id]
+      'UPDATE strategies SET name = $1, troop_combo = $2, tips = $3, image_url = $4, mode = $5 WHERE id = $6, ',
+      [name, troop_combo, tips, image_url, mode, req.params.id]
     );
     res.sendStatus(204);
   } catch (err) {
