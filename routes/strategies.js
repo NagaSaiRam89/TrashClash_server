@@ -3,6 +3,7 @@ import pool from '../db/db.js';
 
 const router = express.Router();
 
+// Get strategies by mode
 router.get('/', async (req, res) => {
   const mode = req.query.mode;
   if (!mode || (mode !== 'builder' && mode !== 'town')) {
@@ -17,11 +18,12 @@ router.get('/', async (req, res) => {
   }
 });
 
+// Add a strategy
 router.post('/', async (req, res) => {
-  const { name, troop_combo, tips,image_url, mode } = req.body;
+  const { name, troop_combo, tips, image_url, mode } = req.body;
   try {
     const result = await pool.query(
-      'INSERT INTO strategies (name, troop_combo, tips, image_url , mode ) VALUES ($1, $2, $3, $4, $5) RETURNING *',
+      'INSERT INTO strategies (name, troop_combo, tips, image_url, mode) VALUES ($1, $2, $3, $4, $5) RETURNING *',
       [name, troop_combo, tips, image_url, mode]
     );
     res.json(result.rows[0]);
@@ -30,14 +32,15 @@ router.post('/', async (req, res) => {
   }
 });
 
+// Update a strategy
 router.put('/:id', async (req, res) => {
   try {
     const id = req.params.id;
-    const { name, troop_combo, tips, image_url, mode  } = req.body;
+    const { name, troop_combo, tips, image_url, mode } = req.body;
 
     const result = await pool.query(
-      'UPDATE strategies SET name=$1, troop_combo=$2, tips=$3, image_url=$4, mode=$5 WHERE id=$6 RETURNING *',
-      [name, troop_combo, tips, image_url, mode,  id]
+      'UPDATE strategies SET name = $1, troop_combo = $2, tips = $3, image_url = $4, mode = $5 WHERE id = $6 RETURNING *',
+      [name, troop_combo, tips, image_url, mode, id]
     );
 
     res.json(result.rows[0]);
@@ -47,7 +50,7 @@ router.put('/:id', async (req, res) => {
   }
 });
 
-
+// Delete a strategy
 router.delete('/:id', async (req, res) => {
   try {
     await pool.query('DELETE FROM strategies WHERE id = $1', [req.params.id]);
@@ -56,6 +59,5 @@ router.delete('/:id', async (req, res) => {
     res.status(500).send(err.message);
   }
 });
-
 
 export default router;
