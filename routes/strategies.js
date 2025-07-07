@@ -31,17 +31,22 @@ router.post('/', async (req, res) => {
 });
 
 router.put('/:id', async (req, res) => {
-  const { name, troop_combo, tips, image_url, mode  } = req.body;
   try {
-    await pool.query(
-      'UPDATE strategies SET name = $1, troop_combo = $2, tips = $3, image_url = $4, mode = $5 WHERE id = $6, ',
-      [name, troop_combo, tips, image_url, mode, req.params.id]
+    const id = req.params.id;
+    const { name, troop_combo, tips, image_url, mode  } = req.body;
+
+    const result = await pool.query(
+      'UPDATE strategies SET name=$1, troop_combo=$2, tips=$3, image_url=$4, mode=$5,  WHERE id=$6 RETURNING *',
+      [name, troop_combo, tips, image_url, mode,  id]
     );
-    res.sendStatus(204);
+
+    res.json(result.rows[0]);
   } catch (err) {
-    res.status(500).send(err.message);
+    console.error('Error updating strategy:', err);
+    res.status(500).json({ error: 'Failed to update strategy' });
   }
 });
+
 
 router.delete('/:id', async (req, res) => {
   try {
