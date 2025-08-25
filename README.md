@@ -85,7 +85,7 @@ To get a local copy up and running, follow these simple steps.
 ### Installation
 
 1.  **Clone the Frontend & Backend Repositories**
-    sh
+    ```sh
     # Clone the frontend
     git clone [https://github.com/NagaSaiRam89/TrashClash_server](https://github.com/NagaSaiRam89/TrashClash)
     cd trash-clash-frontend
@@ -95,10 +95,10 @@ To get a local copy up and running, follow these simple steps.
     git clone [https://github.com/NagaSaiRam89/TrashClash_server](https://github.com/NagaSaiRam89/TrashClash_server)
     cd trash-clash-backend
     npm install
-    
+    ```
 
 2.  **Configure Environment Variables**
-    sh
+    ```sh
     Create a `.env` file in the root of your **backend** directory and add the following:
     env
     PORT=5000
@@ -108,14 +108,14 @@ To get a local copy up and running, follow these simple steps.
     Create a `.env` file in the root of your **frontend** directory:
     env
     VITE_API_URL="http://localhost:5000/api"
-    
+    ```
 
 3.  **Set Up the PostgreSQL Database**
     -   Create a new database named `trashclash`.
     -   Run the SQL scripts located in the `/db` folder of the backend to create the necessary tables (`troops`, `layouts`, `strategies`).
 
 4.  **Run the Application**
-    sh
+    ```sh
     # Run the backend server
     cd trash-clash-backend
     npm start
@@ -123,7 +123,7 @@ To get a local copy up and running, follow these simple steps.
     # Run the frontend development server
     cd trash-clash-frontend
     npm start
-    
+    ```
 
 ---
 
